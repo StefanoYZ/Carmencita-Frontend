@@ -1,5 +1,10 @@
-import { rootRoute } from './routes/rootRoute';
+import { AuthProvider } from './context/AuthContext';
+import { AppRouter } from './routes/appRouter';
 
 export function App() {
-  return rootRoute.element;
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 }
