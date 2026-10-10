@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, it } from 'vitest';
-import { App } from './App';
+import { App } from '../../app/App';
 
 let root: Root | undefined;
 
@@ -14,15 +14,16 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-describe('bootstrap render', () => {
-  it('renders the root page and health status', () => {
+describe('application shell', () => {
+  it('renders the login page when no session exists', () => {
+    window.history.replaceState({}, '', '/login');
     const container = document.createElement('div');
     document.body.appendChild(container);
     root = createRoot(container);
 
     act(() => root?.render(<App />));
 
-    expect(container.querySelector('h1')?.textContent).toBe('Carmencita Express');
-    expect(container.querySelector('[data-testid="health-status"]')?.textContent).toBe('ok');
+    expect(container.querySelector('h1')?.textContent).toContain('Acceso operativo');
+    expect(container.querySelector('input[name="username"]')).not.toBeNull();
   });
 });
